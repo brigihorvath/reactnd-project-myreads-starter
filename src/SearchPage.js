@@ -19,18 +19,30 @@ class SearchPage extends Component {
 	}
 
 	updateQuery = (query) => {
+		//if there is something typed...
 			if(query){
+				//set the state of the query
 			this.setState({query: query})
+				//get the books by the search
 			BooksAPI.search(query.trim()).then((books) =>  {
+				//if there are results, make sure, that the category is the same on both the search and the main page
 				if(books.length > 0){
+				let booksOnTheShelf = this.props.books;
+				let booksOnTheShelfID = booksOnTheShelf.map((item) => item.id)
+				books.map((item) =>
+					{if(!item.shelf){item.shelf = 'none'}
+					if( booksOnTheShelfID.indexOf(item.id) !== -1){
+						item.shelf = booksOnTheShelf.find((book) => book.id === item.id ).shelf
+					}})
+				//if there are state, set the books
 				this.setState({books: books})
-				// {this.props.books.map((book) => {if{book.id === }})}
 				}else{
 				this.setState({books: []})
 				}
 		})}else{
 				this.setState({query: '', books: []})
-			}}
+			}
+		}
 		
 
 

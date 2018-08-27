@@ -15,7 +15,6 @@ class ListBooks extends Component{
 		const { books, onChangeCategory } = this.props;
 		const bookShelfTitles = ['Currently Reading', 'Want to Read', 'Read']
 		const  bookShelfValues = ['currentlyReading', 'wantToRead', 'read']
-//itt majd map és filerrel végig kell menni a könyveken
 
 		return(
 			<div>
