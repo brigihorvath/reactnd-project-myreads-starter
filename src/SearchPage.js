@@ -20,20 +20,23 @@ class SearchPage extends Component {
 
 	updateQuery = (query) => {
 		//if there is something typed...
-			if(query){
+		if(query){
 				//set the state of the query
 			this.setState({query: query})
 				//get the books by the search
 			BooksAPI.search(query.trim()).then((books) =>  {
 				//if there are results, make sure, that the category is the same on both the search and the main page
 				if(books.length > 0){
-				let booksOnTheShelf = this.props.books;
+				let booksOnTheShelf = this.props.books
 				let booksOnTheShelfID = booksOnTheShelf.map((item) => item.id)
-				books.map((item) =>
-					{if(!item.shelf){item.shelf = 'none'}
-					if( booksOnTheShelfID.indexOf(item.id) !== -1){
-						item.shelf = booksOnTheShelf.find((book) => book.id === item.id ).shelf
-					}})
+				books.map((book) => {
+					if(!book.shelf){book.shelf = 'none'}
+					booksOnTheShelfID.map((id) =>{
+						if(book.id === id){book.shelf= booksOnTheShelf.find((x) => x.id === id).shelf}
+						return book.shelf
+					})
+					return book.shelf
+				})
 				//if there are state, set the books
 				this.setState({books: books})
 				}else{
@@ -42,8 +45,10 @@ class SearchPage extends Component {
 		})}else{
 				this.setState({query: '', books: []})
 			}
-		}
 		
+    }
+
+
 
 
 	clearQuery = () => {
@@ -53,7 +58,6 @@ class SearchPage extends Component {
 	render(){
 		const { onChangeCategory } = this.props
 		const { query, books } = this.state
-		console.log(books)
 
 		return(
 			<div className="search-books">
@@ -84,7 +88,7 @@ class SearchPage extends Component {
 		                          <div className="book-top">
 		                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
 		                            <div className="book-shelf-changer">
-		                              <select defaultValue={book.shelf} onChange={(event) => onChangeCategory(book, event.target.value)}>
+		                              <select value={book.shelf} onChange={(event) => onChangeCategory(book, event.target.value)}>
 		                                <option value="move" disabled>Move to...</option>
 		                                <option value="currentlyReading">Currently Reading</option>
 		                                <option value="wantToRead">Want to Read</option>
