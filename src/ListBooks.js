@@ -13,6 +13,7 @@ class ListBooks extends Component{
 
 	render(){
 		const { books, onChangeCategory } = this.props;
+		//helping arrays to render the books
 		const bookShelfTitles = ['Currently Reading', 'Want to Read', 'Read']
 		const  bookShelfValues = ['currentlyReading', 'wantToRead', 'read']
 
@@ -32,7 +33,6 @@ class ListBooks extends Component{
               		<div className="bookshelf-books">
               			<ol className="books-grid">
               			{/* The second map creates the book grid */}
-
               			{books.filter((book) => (book.shelf === shelf)).map((book, index) => (
               				<li key={index}>
 								<div className="book">

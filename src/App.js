@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-     books: []
+  books: []
   }
 
 //after the component is mounted in the DOM, the books are loaded and the state is set
@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
       }))
     })
   } 
-
+//rendering the two Components
   render() {
     return (
       <div className="app">
